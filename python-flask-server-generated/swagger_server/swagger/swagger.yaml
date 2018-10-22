@@ -1,0 +1,348 @@
+---
+swagger: "2.0"
+info:
+  description: "API for property registration.\n"
+  version: "1.0.0"
+  title: "Properties Register API"
+  contact:
+    email: "kirk.java@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:5002"
+basePath: "/api/v1.0"
+tags:
+- name: "Imoveis"
+  description: "Endpoints for properties registration"
+- name: "Imobiliaria"
+  description: "Endpoints for real estate agency"
+schemes:
+- "http"
+paths:
+  /imoveis/{id}:
+    get:
+      tags:
+      - "Imoveis"
+      summary: "Obtem os dados de um Imóvel"
+      description: "Dados do Imóvel"
+      operationId: "imoveis_id_get"
+      produces:
+      - "applications/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "object"
+            properties:
+              imoveis:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Imovel"
+      x-swagger-router-controller: "swagger_server.controllers.imoveis_controller"
+  /imoveis:
+    get:
+      tags:
+      - "Imoveis"
+      summary: "Lista os Imóveis"
+      description: "Listagem de imóveis"
+      operationId: "imoveis_get"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "object"
+            properties:
+              imoveis:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Imovel"
+      x-swagger-router-controller: "swagger_server.controllers.imoveis_controller"
+    post:
+      tags:
+      - "Imoveis"
+      summary: "Registro de imóveis"
+      description: "Inclui um novo imóvel"
+      operationId: "imoveis_post"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do imóvel"
+        required: true
+        schema:
+          $ref: "#/definitions/body"
+      responses:
+        201:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Imovel"
+      x-swagger-router-controller: "swagger_server.controllers.imoveis_controller"
+    put:
+      tags:
+      - "Imoveis"
+      summary: "Atualiza os dados de um Imóvel"
+      description: "Atualização de dados de imóvel"
+      operationId: "imoveis_put"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do imóvel"
+        required: true
+        schema:
+          $ref: "#/definitions/Imovel"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Imovel"
+      x-swagger-router-controller: "swagger_server.controllers.imoveis_controller"
+  /imobiliaria/{id}:
+    get:
+      tags:
+      - "Imobiliaria"
+      summary: "Obtem os dados de uma Imabiliária"
+      description: "Dados da Imabiliária"
+      operationId: "imobiliaria_id_get"
+      produces:
+      - "applications/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "object"
+            properties:
+              imobiliarias:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Imobiliaria"
+      x-swagger-router-controller: "swagger_server.controllers.imobiliaria_controller"
+  /imobiliaria:
+    get:
+      tags:
+      - "Imobiliaria"
+      summary: "Lista as Imabiliárias"
+      description: "Listagem de Imabiliárias"
+      operationId: "imobiliaria_get"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "object"
+            properties:
+              imobiliarias:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Imobiliaria"
+      x-swagger-router-controller: "swagger_server.controllers.imobiliaria_controller"
+    post:
+      tags:
+      - "Imobiliaria"
+      summary: "Registro de Imabiliárias"
+      description: "Inclui uma nova Imabiliária"
+      operationId: "imobiliaria_post"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do imóvel"
+        required: true
+        schema:
+          $ref: "#/definitions/body_1"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Imobiliaria"
+      x-swagger-router-controller: "swagger_server.controllers.imobiliaria_controller"
+    put:
+      tags:
+      - "Imobiliaria"
+      summary: "Atualiza os dados de uma Imabiliária"
+      description: "Atualização de dados de Imabiliária"
+      operationId: "imobiliaria_put"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do imóvel"
+        required: true
+        schema:
+          $ref: "#/definitions/Imobiliaria"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Imobiliaria"
+      x-swagger-router-controller: "swagger_server.controllers.imobiliaria_controller"
+definitions:
+  Imovel:
+    type: "object"
+    required:
+    - "description"
+    - "endereço"
+    - "idimobiliaria"
+    - "nome"
+    - "status"
+    - "tipo"
+    properties:
+      id:
+        type: "integer"
+      nome:
+        type: "string"
+        maxLength: 100
+      endereço:
+        type: "string"
+        maxLength: 250
+      description:
+        type: "string"
+        maxLength: 250
+      status:
+        type: "string"
+        enum:
+        - "Ativo"
+        - "Inativo"
+      caracteristicas:
+        type: "string"
+        maxLength: 500
+      tipo:
+        type: "string"
+        enum:
+        - "Apartamento"
+        - "Casa"
+      finalidade:
+        type: "string"
+        enum:
+        - "Residencial"
+        - "Escritório"
+      idimobiliaria:
+        type: "integer"
+    example:
+      caracteristicas: "caracteristicas"
+      tipo: "Apartamento"
+      finalidade: "Residencial"
+      endereço: "endereço"
+      description: "description"
+      nome: "nome"
+      id: 0
+      idimobiliaria: 6
+      status: "Ativo"
+  Imobiliaria:
+    type: "object"
+    required:
+    - "nome"
+    properties:
+      id:
+        type: "integer"
+      nome:
+        type: "string"
+        maxLength: 100
+      endereço:
+        type: "string"
+        maxLength: 250
+    example:
+      endereço: "endereço"
+      nome: "nome"
+      id: 0
+  inline_response_200:
+    properties:
+      imoveis:
+        type: "array"
+        items:
+          $ref: "#/definitions/Imovel"
+    example:
+      imoveis:
+      - caracteristicas: "caracteristicas"
+        tipo: "Apartamento"
+        finalidade: "Residencial"
+        endereço: "endereço"
+        description: "description"
+        nome: "nome"
+        id: 0
+        idimobiliaria: 6
+        status: "Ativo"
+      - caracteristicas: "caracteristicas"
+        tipo: "Apartamento"
+        finalidade: "Residencial"
+        endereço: "endereço"
+        description: "description"
+        nome: "nome"
+        id: 0
+        idimobiliaria: 6
+        status: "Ativo"
+  body:
+    type: "object"
+    required:
+    - "description"
+    - "endereço"
+    - "idimobiliaria"
+    - "nome"
+    - "status"
+    - "tipo"
+    properties:
+      nome:
+        type: "string"
+        maxLength: 100
+      endereço:
+        type: "string"
+        maxLength: 250
+      description:
+        type: "string"
+        maxLength: 250
+      status:
+        type: "string"
+        enum:
+        - "Ativo"
+        - "Inativo"
+      caracteristicas:
+        type: "string"
+        maxLength: 500
+      tipo:
+        type: "string"
+        enum:
+        - "Apartamento"
+        - "Casa"
+      finalidade:
+        type: "string"
+        enum:
+        - "Residencial"
+        - "Escritório"
+      idimobiliaria:
+        type: "integer"
+  inline_response_200_1:
+    properties:
+      imobiliarias:
+        type: "array"
+        items:
+          $ref: "#/definitions/Imobiliaria"
+    example:
+      imobiliarias:
+      - endereço: "endereço"
+        nome: "nome"
+        id: 0
+      - endereço: "endereço"
+        nome: "nome"
+        id: 0
+  body_1:
+    type: "object"
+    required:
+    - "nome"
+    properties:
+      nome:
+        type: "string"
+        maxLength: 100
+      endereço:
+        type: "string"
+        maxLength: 250
